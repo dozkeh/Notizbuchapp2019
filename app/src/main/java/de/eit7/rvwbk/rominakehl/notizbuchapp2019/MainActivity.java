@@ -66,11 +66,16 @@ public class MainActivity extends AppCompatActivity {
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            Intent intent = new Intent(MainActivity.this, NoteActivity.class);
-            intent.putExtra("Title","title");
-            intent.putExtra("Message","message");
-            intent.putExtra("Id",0);
-            startActivity(intent);
+                int nextId = 0;
+                NoteBean myNote = new NoteBean();
+                Intent intent = new Intent(MainActivity.this, NoteActivity.class);
+                nextId = MyFileHandler.getInstance().getMaxId()+1;
+                myNote.setId(nextId);
+                myNote.setMessage("Message");
+                myNote.setTitle("Title");
+                MyFileHandler.getInstance().getAllNotes().add(myNote);
+                MyFileHandler.getInstance().setCurrentDetailNoteBean(nextId);
+                startActivity(intent);
             }
         });
 
