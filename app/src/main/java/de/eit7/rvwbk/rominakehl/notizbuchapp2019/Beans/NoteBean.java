@@ -1,17 +1,17 @@
 package de.eit7.rvwbk.rominakehl.notizbuchapp2019.Beans;
 
-public class Note {
+public class NoteBean {
 
     private int id;
     private String title;
     private String message;
 
-    public Note()
+    public NoteBean()
     {
 
     }
 
-    public Note(int id, String title, String message) {
+    public NoteBean(int id, String title, String message) {
         this.id = id;
         this.title = title;
         this.message = message;
@@ -44,7 +44,7 @@ public class Note {
 
     @Override
     public String toString() {
-        return "Note{" +
+        return "NoteBean{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", message='" + message + '\'' +

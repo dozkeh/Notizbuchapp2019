@@ -11,7 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Beans.Note;
+import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Beans.NoteBean;
+import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Controller.MyFileHandler;
 import de.eit7.rvwbk.rominakehl.notizbuchapp2019.NoteActivity;
 import de.eit7.rvwbk.rominakehl.notizbuchapp2019.R;
 
@@ -22,12 +23,10 @@ import de.eit7.rvwbk.rominakehl.notizbuchapp2019.R;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
     private Context mContext ;
-    private List<Note> mData ;
 
 
-    public RecyclerViewAdapter(Context mContext, List<Note> mData) {
+    public RecyclerViewAdapter(Context mContext) {
         this.mContext = mContext;
-        this.mData = mData;
     }
 
     @Override
@@ -35,15 +34,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View view = null;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardview_item_note,parent,false);
+        view = mInflater.inflate(R.layout.cardview_item_note_2,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        holder.note_title.setText(mData.get(position).getTitle());
-        holder.note_text.setText(mData.get(position).getMessage());
+        holder.note_title.setText(MyFileHandler.getInstance().getAllNotes().get(position).getTitle());
+        holder.note_text.setText(MyFileHandler.getInstance().getAllNotes().get(position).getMessage());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,9 +50,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Intent intent = new Intent(mContext, NoteActivity.class);
 
                 // passing data to the note activity
-                intent.putExtra("Title",mData.get(position).getTitle());
+                /*intent.putExtra("Title",mData.get(position).getTitle());
                 intent.putExtra("Message",mData.get(position).getMessage());
-                intent.putExtra("Id",mData.get(position).getId());
+                intent.putExtra("Id",mData.get(position).getId());*/
+                MyFileHandler.getInstance().setCurrentDetailNoteBean((MyFileHandler.getInstance().getAllNotes().get(position).getId()));
                 // start the activity
                 mContext.startActivity(intent);
 
@@ -66,7 +66,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return mData.size();
+        return MyFileHandler.getInstance().getAllNotes().size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {

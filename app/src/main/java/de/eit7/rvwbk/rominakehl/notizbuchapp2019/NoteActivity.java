@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Controller.MyFileHandler;
 
 
 public class NoteActivity extends AppCompatActivity {
@@ -23,12 +24,14 @@ public class NoteActivity extends AppCompatActivity {
 
         // Recieve data
         Intent intent = getIntent();
-        String Title = intent.getExtras().getString("Title");
-        String Description = intent.getExtras().getString("Message");
+        /*String Title = intent.getExtras().getString("Title");
+        String Description = intent.getExtras().getString("Message");*/
+        String Title = MyFileHandler.getInstance().getCurrentDetailNoteBean().getTitle();
+        String Message = MyFileHandler.getInstance().getCurrentDetailNoteBean().getMessage();
 
         // Setting values
 
         txtNoteTitle.setText(Title);
-        txtNoteMessage.setText(Description);
+        txtNoteMessage.setText(Message);
     }
 }

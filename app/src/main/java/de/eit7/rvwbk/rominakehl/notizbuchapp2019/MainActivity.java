@@ -20,14 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Adapter.RecyclerViewAdapter;
-import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Beans.Note;
+import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Beans.NoteBean;
+import de.eit7.rvwbk.rominakehl.notizbuchapp2019.Controller.MyFileHandler;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtFeedback = null;
     private FloatingActionButton btnAddNote = null;
     private RecyclerView rView = null;
-    private List<Note> lstNote;
+    private ArrayList<NoteBean> lstNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,26 +39,29 @@ public class MainActivity extends AppCompatActivity {
         this.btnAddNote = (FloatingActionButton) findViewById(R.id.btn_main_add_id);
         this.rView = (RecyclerView) findViewById(R.id.vw_main_rec_id);
 
-        lstNote = new ArrayList<>();
-        lstNote.add(new Note(1,"Note 1","Butter, Bread, Milk, Sugar, Salt, Cookies, Flour, Cheese, Toast, Salmon, Cream, Onions, Apples, Bananas, Mushrooms "));
-        lstNote.add(new Note(2,"Note 2","Milk"));
-        lstNote.add(new Note(3,"Note 3","Cheese"));
-        lstNote.add(new Note(4,"Note 4","Cookies"));
-        lstNote.add(new Note(5,"Note 5","Butter"));
-        lstNote.add(new Note(6,"Note 6","Milk"));
-        lstNote.add(new Note(7,"Note 7","Cheese"));
-        lstNote.add(new Note(8,"Note 8","Cookies"));
-        lstNote.add(new Note(9,"Note 9","Butter"));
-        lstNote.add(new Note(10,"Note 10","Milk"));
-        lstNote.add(new Note(11,"Note 11","Cheese"));
-        lstNote.add(new Note(12,"Note 12","Cookies"));
+        lstNote = new ArrayList<NoteBean>();
+        lstNote.add(new NoteBean(1,"Note 1","Butter, Bread, Milk, Sugar, Salt, Cookies, Flour, Cheese, Toast, Salmon, Cream, Onions, Apples, Bananas, Mushrooms "));
+        lstNote.add(new NoteBean(2,"Note 2","Milk"));
+        lstNote.add(new NoteBean(3,"Note 3","Cheese"));
+        lstNote.add(new NoteBean(4,"Note 4","Cookies"));
+        lstNote.add(new NoteBean(5,"Note 5","Butter"));
+        lstNote.add(new NoteBean(6,"Note 6","Milk"));
+        lstNote.add(new NoteBean(7,"Note 7","Cheese"));
+        lstNote.add(new NoteBean(8,"Note 8","Cookies"));
+        lstNote.add(new NoteBean(9,"Note 9","Butter"));
+        lstNote.add(new NoteBean(10,"Note 10","Milk"));
+        lstNote.add(new NoteBean(11,"Note 11","Cheese"));
+        lstNote.add(new NoteBean(12,"Note 12","Cookies"));
 
+        MyFileHandler.getInstance().setAllNotes(lstNote);
 
-        RecyclerView myRV = (RecyclerView) findViewById(R.id.vw_main_rec_id);
-        RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this,lstNote);
-        myRV.setLayoutManager(new GridLayoutManager(this,3));
-        //myRV.setLayoutManager(new LinearLayoutManager(this));
-        myRV.setAdapter(myAdapter);
+        if((MyFileHandler.getInstance().getAllNotes()!=null) && (!MyFileHandler.getInstance().getAllNotes().isEmpty())) {
+            RecyclerView myRV = (RecyclerView) findViewById(R.id.vw_main_rec_id);
+            RecyclerViewAdapter myAdapter = new RecyclerViewAdapter(this);
+            //myRV.setLayoutManager(new GridLayoutManager(this, 3));
+            myRV.setLayoutManager(new LinearLayoutManager(this));
+            myRV.setAdapter(myAdapter);
+        }
 
         btnAddNote.setOnClickListener(new View.OnClickListener() {
             @Override
